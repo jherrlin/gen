@@ -3,6 +3,7 @@
    [clojure.spec.alpha :as s]
    [clojure.string :as str]
    [clojure.java.io :as io]
+   [cheshire.core :as cheshire]
    [clojure.test.check.generators :as gen]
    [server.generators :as generators]))
 
@@ -41,9 +42,47 @@
 (def swedish-cities
   (line-seq (clojure.java.io/reader (io/resource "swedish-cities.txt"))))
 
+(def email-providers
+  (line-seq (clojure.java.io/reader (io/resource "email-providers.txt"))))
+
+(s/def ::first-name
+  (s/with-gen
+    ::non-blank-string
+    #(gen/frequency [[1 (s/gen ::non-blank-string)]
+                     [9 (gen/elements first-names)]])))
+
+(s/def ::last-name
+  (s/with-gen
+    ::non-blank-string
+    #(gen/frequency [[1 (s/gen ::non-blank-string)]
+                     [9 (gen/elements last-names)]])))
+
+(s/def ::birth-city
+  (s/with-gen
+    ::non-blank-string
+    #(gen/frequency [[1 (s/gen ::non-blank-string)]
+                     [9 (gen/elements swedish-cities)]])))
+
+(s/def ::person-nr ::luhn)
+
+(s/def ::person
+  (s/keys :req-un [::first-name
+                   ::last-name
+                   ::birth-city
+                   ::person-nr
+                   ::email]))
+
+(defn gen-person []
+  (cheshire/generate-string (gen/generate (s/gen ::person)))
+  )
+
+
 
 (comment
   (gen/generate (s/gen ::m))
   (gen/generate (s/gen ::email))
   (gen/generate (s/gen ::luhn))
+
+  (cheshire/generate-string (gen/generate (s/gen ::person)))
+
   )

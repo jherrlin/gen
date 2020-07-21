@@ -5,6 +5,7 @@
    [server.port :as port]
    [config.core :refer [env]]
    [nrepl.server]
+   [server.specs :as specs]
    [taoensso.timbre :as timbre]))
 
 (defonce state (atom {:stop-server-fn nil
@@ -20,7 +21,8 @@
     (handler req)))
 
 (compojure/defroutes routes
-  (compojure/GET "/" [] "<h1>Hello World</h1>"))
+  (compojure/GET "/" [] "<h1>Hello World</h1>")
+  (compojure/GET "/person" [] (specs/gen-person)))
 
 (def handler
   (-> #'routes
