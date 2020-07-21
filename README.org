@@ -1,0 +1,18 @@
+
+Generate data from Clojure specs and provide them via an API.
+
+
+
+#+BEGIN_SRC shell :results output code
+
+#+END_SRC
+
+
+* Update deps
+
+  Instructions on how to update dependencies.
+
+  #+BEGIN_SRC shell :results output code
+    clojure -Sdeps '{:deps {olical/depot {:mvn/version "1.8.4"}}}' -m depot.outdated.main
+    clojure -Sdeps '{:deps {olical/depot {:mvn/version "1.8.4"}}}' -m depot.outdated.main --update
+  #+END_SRC
