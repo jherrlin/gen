@@ -1,12 +1,34 @@
 
 Generate data from Clojure specs and provide them via an API.
 
+* API
 
+  #+BEGIN_SRC shell :results output code :exports both
+    curl -i http://localhost:3000/person
+  #+END_SRC
 
-#+BEGIN_SRC shell :results output code
+  #+RESULTS:
+  #+begin_src shell
+    HTTP/1.1 200 OK
+    Content-Type: application/json; charset=utf-8
+    Content-Length: 151
+    Server: http-kit
+    Date: Sun, 26 Jul 2020 15:49:24 GMT
 
-#+END_SRC
+    {"first-name":"Adele","last-name":"Eriksson","birth-city":"nGVB09","person-nr":"4641364379","email":"37Kk@4z2u63MZuN10vH3.ws48f4YnzGG4RdOcN33J0DRCwI5"}
+  #+end_src
 
+* Build uberjar
+
+  #+BEGIN_SRC shell :results output code
+    clojure -Auberjar
+  #+END_SRC
+
+* Run jar
+
+  #+BEGIN_SRC shell :results output code
+    java -cp target/gen.jar clojure.main -m server.server
+  #+END_SRC
 
 * Update deps
 

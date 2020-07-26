@@ -3,9 +3,9 @@
    [org.httpkit.server :as httpkit.server]
    [compojure.core :as compojure]
    [server.port :as port]
+   [server.routes :as routes]
    [config.core :refer [env]]
    [nrepl.server]
-   [server.specs :as specs]
    [taoensso.timbre :as timbre]))
 
 (defonce state (atom {:stop-server-fn nil
@@ -15,25 +15,12 @@
   (swap! state assoc :nrepl-server
          (nrepl.server/start-server :bind address :port port)))
 
-(defn debug-middleware [handler]
-  (fn [req]
-    (clojure.pprint/pprint req)
-    (handler req)))
-
-(compojure/defroutes routes
-  (compojure/GET "/" [] "<h1>Hello World</h1>")
-  (compojure/GET "/person" [] (specs/gen-person)))
-
-(def handler
-  (-> #'routes
-      (debug-middleware)))
-
 (defn start-server
   "Connect a new db instance and start the server."
   [port]
   (println "Starting server")
   (swap! state assoc :stop-server-fn
-         (httpkit.server/run-server #'handler {:port port})))
+         (httpkit.server/run-server #'routes/handler {:port port})))
 
 (defn stop-server
   "Stop server."

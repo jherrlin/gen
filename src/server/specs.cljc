@@ -3,7 +3,6 @@
    [clojure.spec.alpha :as s]
    [clojure.string :as str]
    [clojure.java.io :as io]
-   [cheshire.core :as cheshire]
    [clojure.test.check.generators :as gen]
    [server.generators :as generators]))
 
@@ -73,16 +72,12 @@
                    ::email]))
 
 (defn gen-person []
-  (cheshire/generate-string (gen/generate (s/gen ::person)))
-  )
-
+  (gen/generate (s/gen ::person)))
 
 
 (comment
   (gen/generate (s/gen ::m))
   (gen/generate (s/gen ::email))
   (gen/generate (s/gen ::luhn))
-
-  (cheshire/generate-string (gen/generate (s/gen ::person)))
 
   )
