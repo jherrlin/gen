@@ -71,9 +71,18 @@
                    ::person-nr
                    ::email]))
 
-(defn gen-person []
+(defn gen-person
+  "Generate a single person."
+  []
   (gen/generate (s/gen ::person)))
 
+(s/def ::persons
+  (s/coll-of ::person))
+
+(defn gen-persons
+  "Generate a collection of persons, random lenght."
+  []
+  (gen/generate (s/gen ::persons)))
 
 (comment
   (gen/generate (s/gen ::m))

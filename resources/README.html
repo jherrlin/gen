@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2020-07-26 Sun 18:02 -->
+<!-- 2020-07-26 Sun 18:23 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>&lrm;</title>
@@ -224,10 +224,11 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents">
 <ul>
-<li><a href="#orgc578c74">1. API</a></li>
-<li><a href="#orgefacb3a">2. Build uberjar</a></li>
-<li><a href="#orge4c3e84">3. Run jar</a></li>
-<li><a href="#orgf7ced8a">4. Update deps</a></li>
+<li><a href="#org36d42ef">1. Intro</a></li>
+<li><a href="#org2aa1306">2. API</a></li>
+<li><a href="#org28d085a">3. Build uberjar</a></li>
+<li><a href="#org558883c">4. Run jar</a></li>
+<li><a href="#orgd7102c4">5. Update deps</a></li>
 </ul>
 </div>
 </div>
@@ -235,9 +236,25 @@
 Generate data from Clojure specs and provide them via an API.
 </p>
 
-<div id="outline-container-orgc578c74" class="outline-2">
-<h2 id="orgc578c74"><span class="section-number-2">1</span> API</h2>
+<div id="outline-container-org36d42ef" class="outline-2">
+<h2 id="org36d42ef"><span class="section-number-2">1</span> Intro</h2>
 <div class="outline-text-2" id="text-1">
+<p>
+This app using Clojure <a href="https://clojure.org/guides/spec">spec</a> and <a href="https://github.com/clojure/test.check">test.check</a> to generate entities from a model
+and provide them in a JSON format through HTTP Rest API. The main pupose is to
+be a quick template that you can extend for your own usage and quickly
+generate the data you need and use it in your development process.
+</p>
+</div>
+</div>
+
+<div id="outline-container-org2aa1306" class="outline-2">
+<h2 id="org2aa1306"><span class="section-number-2">2</span> API</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Single person.
+</p>
+
 <div class="org-src-container">
 <pre class="src src-shell">curl -i http://localhost:3000/person
 </pre>
@@ -246,19 +263,40 @@ Generate data from Clojure specs and provide them via an API.
 <div class="org-src-container">
 <pre class="src src-shell">HTTP/1.1 200 OK
 Content-Type: application/json; charset=utf-8
-Content-Length: 140
+Content-Length: 162
 Server: http-kit
-Date: Sun, 26 Jul 2020 16:02:24 GMT
+Date: Sun, 26 Jul 2020 16:23:04 GMT
 
-{"first-name":"Adelind","last-name":"Andersson","birth-city":"Göteborg","person-nr":"1636937797","email":"UmWMQhCe4T7C@5z2Ixck2Y.r49Sh30j"}
+{"first-name":"Ada","last-name":"Eriksson","birth-city":"Växjö","person-nr":"2742094697","email":"8a55BGCD0ercOhLVS0Cc9Bou4@3Tg0sJzC633P22uHKsu0px.kh41wHsl54R"}
+</pre>
+</div>
+
+<p>
+Generate a collection with persons, length is random.
+</p>
+
+<div class="org-src-container">
+<pre class="src src-shell">curl -i http://localhost:3000/persons
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-shell">HTTP/1.1 200 OK
+Content-Type: application/json; charset=utf-8
+Content-Length: 2428
+Server: http-kit
+Date: Sun, 26 Jul 2020 16:23:04 GMT
+
+[{"first-name":"Aarika","last-name":"5LjBh006I71DE8QEupiLWFqCYXc2y","birth-city":"Göteborg","person-nr":"9747598689","email":"C09sKd0ey4mv07x7V2n@1L8E6xH23IagANzh2.Hz4Xs4KpSA1j95C1"},{"first-name":"Abbi","last-name":"Herrlin","birth-city":"Malmö","person-nr":"3386564938","email":"8x880@smG0uuaI2wpa80r81Tmv1T62v8a.Nhd043Kx54UCQYzM1No2ZUWz1om8G"},{"first-name":"Abagael","last-name":"Andersson","birth-city":"Malmö","person-nr":"4540784164","email":"E8r2iY2i1rdpX2rL@ujwhBU9VOo0S1sxngL.ZA1lT3BQpmgcCZsZMM8uyEtNeH2s"},{"first-name":"Adela","last-name":"Svensson","birth-city":"Växjö","person-nr":"2325037584","email":"M46k21TZ2XJt1@6.nIa"},{"first-name":"Adelaide","last-name":"Eriksson","birth-city":"Växjö","person-nr":"9691049077","email":"znPI947abNlbv5KTRC1P81ITX@50WE2ZO4jRIu2980QuS32peKe7975L.GHB13q6ZI96BJNkhA"},{"first-name":"Adeline","last-name":"Herrlin","birth-city":"Malmö","person-nr":"7405119343","email":"Mk3oprjh8sm7MgO0CkZZA472h26@8e4Dcz27887TC5f2cZI4FvDM.2lhQTze31L001il50q3F5O3Oh6P6"},{"first-name":"Adella","last-name":"Roos","birth-city":"13eobSwGM06ecH109hoRSGR7p","person-nr":"1134953320","email":"QWiD9WpxS6Kpw@78bq3dY5J7Mx2H.xU7p7GR"},{"first-name":"Addi","last-name":"Eriksson","birth-city":"Malmö","person-nr":"1531120085","email":"80s@Fh59922v2c4Q2l3u4l1KAI0.G0Lx91f4L7HyY06lNHc0T"},{"first-name":"Abbey","last-name":"Eriksson","birth-city":"Malmö","person-nr":"0397581968","email":"nHLmBJc1J@CTDWzOI4V0K1g3NEJXQ283gsYPc7U.359"},{"first-name":"Abigale","last-name":"Eriksson","birth-city":"Halmstad","person-nr":"1746672318","email":"DuGQSQFLbAjEs9yt7@7mL1N10Cn.9EFtewusRAH20r02JWwz4549b4lS7U"},{"first-name":"Adara","last-name":"Roos","birth-city":"Malmö","person-nr":"2107691327","email":"qUK5IG2HFE1M@FB5xV9gD2.898N49pUb9cZs7Y1"},{"first-name":"Z8FGj","last-name":"Andersson","birth-city":"Malmö","person-nr":"1536366089","email":"W62CIg9Tvq07lkK0S32HMdAw@GgHQ5474PCA1v35vU2XVM99gP90.D"},{"first-name":"Adele","last-name":"Herrlin","birth-city":"Malmö","person-nr":"1463842185","email":"1ZkuZX623rj8t6ze@2y7d9wQ80w3L71Q0f8p8nDT.jhPHfYDDxc1sZ04a07e90zYMs1"},{"first-name":"Addi","last-name":"Herrlin","birth-city":"Göteborg","person-nr":"0664893252","email":"0wM0kWHf95mCn078m8fwJD8@q7DVBk3H6wDjy6d2K.K2r6ag5XKTdgxGDg40"},{"first-name":"Abigail","last-name":"Roos","birth-city":"Kalmar","person-nr":"1828828531","email":"0b2r9Ws7K2Pr5MErR0If@fvW5Nf2C21GJmUEs0.gU7dKuv7YGf3464moE8x2"}]
 </pre>
 </div>
 </div>
 </div>
 
-<div id="outline-container-orgefacb3a" class="outline-2">
-<h2 id="orgefacb3a"><span class="section-number-2">2</span> Build uberjar</h2>
-<div class="outline-text-2" id="text-2">
+
+<div id="outline-container-org28d085a" class="outline-2">
+<h2 id="org28d085a"><span class="section-number-2">3</span> Build uberjar</h2>
+<div class="outline-text-2" id="text-3">
 <div class="org-src-container">
 <pre class="src src-shell">clojure -Auberjar
 </pre>
@@ -266,9 +304,9 @@ Date: Sun, 26 Jul 2020 16:02:24 GMT
 </div>
 </div>
 
-<div id="outline-container-orge4c3e84" class="outline-2">
-<h2 id="orge4c3e84"><span class="section-number-2">3</span> Run jar</h2>
-<div class="outline-text-2" id="text-3">
+<div id="outline-container-org558883c" class="outline-2">
+<h2 id="org558883c"><span class="section-number-2">4</span> Run jar</h2>
+<div class="outline-text-2" id="text-4">
 <div class="org-src-container">
 <pre class="src src-shell">java -cp target/gen.jar clojure.main -m server.server
 </pre>
@@ -276,9 +314,9 @@ Date: Sun, 26 Jul 2020 16:02:24 GMT
 </div>
 </div>
 
-<div id="outline-container-orgf7ced8a" class="outline-2">
-<h2 id="orgf7ced8a"><span class="section-number-2">4</span> Update deps</h2>
-<div class="outline-text-2" id="text-4">
+<div id="outline-container-orgd7102c4" class="outline-2">
+<h2 id="orgd7102c4"><span class="section-number-2">5</span> Update deps</h2>
+<div class="outline-text-2" id="text-5">
 <p>
 Instructions on how to update dependencies.
 </p>
@@ -293,7 +331,7 @@ clojure -Sdeps '{:deps {olical/depot {:mvn/version "1.8.4"}}}' -m depot.outdated
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: John Herrlin</p>
-<p class="date">Created: 2020-07-26 Sun 18:02</p>
+<p class="date">Created: 2020-07-26 Sun 18:23</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

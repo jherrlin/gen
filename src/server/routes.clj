@@ -14,7 +14,8 @@
 
 (compojure/defroutes routes
   (compojure/GET "/" [] (slurp (io/resource "README.html")))
-  (compojure/GET "/person" [] (response (specs/gen-person))))
+  (compojure/GET "/person" [] (response (specs/gen-person)))
+  (compojure/GET "/persons" [] (response (specs/gen-persons))))
 
 (def handler
   (-> #'routes

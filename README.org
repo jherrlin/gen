@@ -1,7 +1,16 @@
 
 Generate data from Clojure specs and provide them via an API.
 
+* Intro
+
+  This app using Clojure [[https://clojure.org/guides/spec][spec]] and [[https://github.com/clojure/test.check][test.check]] to generate entities from a model
+  and provide them in a JSON format through HTTP Rest API. The main pupose is to
+  be a quick template that you can extend for your own usage and quickly
+  generate the data you need and use it in your development process.
+
 * API
+
+  Single person.
 
   #+BEGIN_SRC shell :results output code :exports both
     curl -i http://localhost:3000/person
@@ -17,6 +26,32 @@ Generate data from Clojure specs and provide them via an API.
 
     {"first-name":"Adele","last-name":"Eriksson","birth-city":"nGVB09","person-nr":"4641364379","email":"37Kk@4z2u63MZuN10vH3.ws48f4YnzGG4RdOcN33J0DRCwI5"}
   #+end_src
+
+  Generate a collection with persons, length is random.
+
+  #+BEGIN_SRC shell :results output code :exports both
+    curl -i http://localhost:3000/persons
+  #+END_SRC
+
+  #+RESULTS:
+  #+begin_src shell
+    HTTP/1.1 200 OK
+    Content-Type: application/json; charset=utf-8
+    Content-Length: 2327
+    Server: http-kit
+    Date: Sun, 26 Jul 2020 16:21:27 GMT
+
+    [{"first-name":"VXXORyihotUvEzsE275eSeTP9U8","last-name":"Andersson","birth-city":"3f1rja3C","person-nr":"8558412907","email":"t4x92agp4n1@dLI1RIrfK1mkLG9pwJoDVu5Zl0n5.ORNo8Ri"},
+      {"first-name":"Adelind","last-name":"Roos","birth-city":"PxlAQ72Qe9SIV5","person-nr":"1976552560","email":"2Vo82G6HTy9Et1CgL3@sp5.3ty80I538Ar0gbM"},
+      {"first-name":"Addy","last-name":"Herrlin","birth-city":"Malmö","person-nr":"0042231159","email":"31uX8BtlyGHU@643fMg33ymE74spFx23bwm0L4wBprb.5J8M5O143SXv3RBnAgVjQKdnbUl1uC"},
+      {"first-name":"rvj39LTSnNmaZ7r47","last-name":"lOC1x38hx3K","birth-city":"Malmö","person-nr":"1885318640","email":"26Sjq9oXrFQg3C3a755qf47MygY9@41T68TD2NqycbR2RuA0.SJC604"},
+      {"first-name":"Adda","last-name":"Herrlin","birth-city":"Halmstad","person-nr":"0231974874","email":"4Tf8I0R6oH@887olk8JS70CEt8XXJ8c0nz.bJ0HM"},
+      {"first-name":"Adelaida","last-name":"Karlsson","birth-city":"1lPnNl","person-nr":"1959880111","email":"08c53qvZM27SLVW752@4n3GYxs5dgjPu74gF2JVywm.ot2yRG62Qh20O2Vg1vYM"},
+      {"first-name":"USEx7dxWWM5DNgYr51","last-name":"Roos","birth-city":"Göteborg","person-nr":"7947779661","email":"oRbquf79Yqm0FlJTRhfCXTCX399v@n8UEmtpJM1.eOS0hXlAH7zM10w7u82Ehw1Q2H"},
+      {"first-name":"Abbey","last-name":"Herrlin","birth-city":"Kalmar","person-nr":"4213970678","email":"YXKk7@tPJPnrl2dckgag2D.Orazl8z3j39PIiRFwr2Ml9"},
+      {"first-name":"Abagael","last-name":"Svensson","birth-city":"Malmö","person-nr":"2664427644","email":"BKb8sBuK510EQydK5h2vkOB66P@64byOS98G2glAxtlG88501DuPN.m0YLINqhlFPnHfSI1aO374tR9"}]
+  #+end_src
+
 
 * Build uberjar
 
