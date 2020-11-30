@@ -38,11 +38,14 @@
 (def last-names
   (line-seq (clojure.java.io/reader (io/resource "last-names.txt"))))
 
+(def email-providers
+  (line-seq (clojure.java.io/reader (io/resource "email-providers.txt"))))
+
 (def swedish-cities
   (line-seq (clojure.java.io/reader (io/resource "swedish-cities.txt"))))
 
-(def email-providers
-  (line-seq (clojure.java.io/reader (io/resource "email-providers.txt"))))
+(def street-addresses
+  (line-seq (clojure.java.io/reader (io/resource "swedish-addresses.txt"))))
 
 (s/def ::first-name
   (s/with-gen
@@ -56,7 +59,7 @@
     #(gen/frequency [[1 (s/gen ::non-blank-string)]
                      [9 (gen/elements last-names)]])))
 
-(s/def ::birth-city
+(s/def ::city
   (s/with-gen
     ::non-blank-string
     #(gen/frequency [[1 (s/gen ::non-blank-string)]
@@ -64,10 +67,27 @@
 
 (s/def ::person-nr ::luhn)
 
+(s/def ::street-address
+  (s/with-gen
+    ::non-blank-string
+    #(gen/frequency [[1 (s/gen ::non-blank-string)]
+                     [9 (gen/elements street-addresses)]])))
+
+(s/def ::street-number pos-int?)
+
+(s/def ::address
+  (s/keys :req-un [::zip-code
+                   ::street-address
+                   ::street-number
+                   ::city]))
+
+(s/def ::id ::uuid)
+
 (s/def ::person
-  (s/keys :req-un [::first-name
+  (s/keys :req-un [::id
+                   ::first-name
                    ::last-name
-                   ::birth-city
+                   ::address
                    ::person-nr
                    ::email]))
 

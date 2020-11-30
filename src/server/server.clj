@@ -1,7 +1,6 @@
 (ns server.server
   (:require
    [org.httpkit.server :as httpkit.server]
-   [compojure.core :as compojure]
    [server.port :as port]
    [server.routes :as routes]
    [config.core :refer [env]]
